@@ -1,7 +1,7 @@
 const dSiteDbTest = require('ava')
 const {newDSiteDB, ts} = require('./lib/util')
 const {debug} = require('../lib/util')
-const DPackVault = require('@dpack/vault')
+const DWebVault = require('@dpack/vault')
 const tempy = require('tempy')
 
 dSiteDbTest.before(() => console.log('dsdb-query-mutate.js'))
@@ -25,7 +25,7 @@ async function setupNewDB () {
 
 dSiteDbTest.before('dSiteDB Tests: setup vaults', async () => {
   async function def (fn) {
-    const a = await DPackVault.create({localPath: tempy.directory()})
+    const a = await DWebVault.create({localPath: tempy.directory()})
     await a.mkdir('/multi')
     const write = (path, record) => a.writeFile(path, JSON.stringify(record))
     await fn(write, a)

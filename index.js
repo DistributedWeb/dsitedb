@@ -14,14 +14,14 @@ const flatten = require('lodash.flatten')
 class DSiteDB extends EventEmitter {
   constructor (name, opts = {}) {
     super()
-    if (typeof window === 'undefined' && !opts.DPackVault) {
-      throw new Error('Must provide {DPackVault} opt when using DSiteDB outside the browser.')
+    if (typeof window === 'undefined' && !opts.DWebVault) {
+      throw new Error('Must provide {DWebVault} opt when using DSiteDB outside the browser.')
     }
     this.level = false
     this.name = name
     this.isBeingOpened = false
     this.isOpen = false
-    this.DPackVault = opts.DPackVault || window.DPackVault
+    this.DWebVault = opts.DWebVault || window.DWebVault
     this._indexMetaLevel = null
     this._tableSchemaLevel = null
     this._tableDefs = {}
@@ -157,8 +157,8 @@ class DSiteDB extends EventEmitter {
       return Promise.all(vault.map(a => this.indexVault(a, opts)))
     }
 
-    // create our own new DPackVault instance
-    vault = typeof vault === 'string' ? new (this.DPackVault)(vault) : vault
+    // create our own new DWebVault instance
+    vault = typeof vault === 'string' ? new (this.DWebVault)(vault) : vault
     debug('DSiteDB.indexVault', vault.url)
     if (!(vault.url in this._vaults)) {
       // store and process
@@ -170,7 +170,7 @@ class DSiteDB extends EventEmitter {
   }
 
   async unindexVault (vault) {
-    vault = typeof vault === 'string' ? new (this.DPackVault)(vault) : vault
+    vault = typeof vault === 'string' ? new (this.DWebVault)(vault) : vault
     if (vault.url in this._vaults) {
       debug('DSiteDB.unindexVault', vault.url)
       delete this._vaults[vault.url]
@@ -181,7 +181,7 @@ class DSiteDB extends EventEmitter {
   async indexFile (vault, filepath) {
     if (typeof vault === 'string') {
       const urlp = new URL(vault)
-      vault = new (this.DPackVault)(urlp.protocol + '//' + urlp.hostname)
+      vault = new (this.DWebVault)(urlp.protocol + '//' + urlp.hostname)
       return this.indexFile(vault, urlp.pathname)
     }
     await Indexer.readAndIndexFile(this, vault, filepath)
@@ -190,7 +190,7 @@ class DSiteDB extends EventEmitter {
   async unindexFile (vault, filepath) {
     if (typeof vault === 'string') {
       const urlp = new URL(vault)
-      vault = new (this.DPackVault)(urlp.protocol + '//' + urlp.hostname)
+      vault = new (this.DWebVault)(urlp.protocol + '//' + urlp.hostname)
       return this.indexFile(vault, urlp.pathname)
     }
     await Indexer.unindexFile(this, vault, filepath)

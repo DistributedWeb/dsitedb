@@ -1,5 +1,5 @@
 const tempy = require('tempy')
-const DPackVault = require('@dpack/vault')
+const DWebVault = require('@dpack/vault')
 const DSiteDB = require('../../index')
 const {debug, veryDebug} = require('../../lib/util')
 
@@ -9,11 +9,11 @@ exports.newDSiteDB = function () {
   debug('\n##', name, '\n')
   var dir = tempy.directory()
   veryDebug('DSiteDB dir:', dir)
-  return new DSiteDB(dir, {DPackVault})
+  return new DSiteDB(dir, {DWebVault})
 }
 
 exports.reopenDB = function (db) {
-  return new DSiteDB(db.name, {DPackVault})
+  return new DSiteDB(db.name, {DWebVault})
 }
 
 var lastTs = 0

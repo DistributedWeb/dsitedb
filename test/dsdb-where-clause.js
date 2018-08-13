@@ -1,6 +1,6 @@
 const dSiteDbTest = require('ava')
 const {newDSiteDB, ts} = require('./lib/util')
-const DPackVault = require('@dpack/vault')
+const DWebVault = require('@dpack/vault')
 const tempy = require('tempy')
 
 dSiteDbTest.before(() => console.log('dsdb-where-clause.js'))
@@ -24,7 +24,7 @@ async function setupNewDB () {
 
 dSiteDbTest.before('dSiteDB Tests: setup vaults', async () => {
   async function def (i, fn) {
-    const a = await DPackVault.create({localPath: tempy.directory(), author: {url: 'dweb://' + (i.toString().repeat(32))}})
+    const a = await DWebVault.create({localPath: tempy.directory(), author: {url: 'dweb://' + (i.toString().repeat(32))}})
     await a.mkdir('/multi')
     const write = (path, record) => a.writeFile(path, JSON.stringify(record))
     await fn(write, a)

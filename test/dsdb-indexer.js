@@ -2,7 +2,7 @@ const dSiteDbTest = require('ava')
 const path = require('path')
 const fs = require('fs')
 const {newDSiteDB, reopenDB, ts} = require('./lib/util')
-const DPackVault = require('@dpack/vault')
+const DWebVault = require('@dpack/vault')
 const tempy = require('tempy')
 const Ajv = require('ajv')
 
@@ -43,7 +43,7 @@ async function setupNewDB () {
 
 dSiteDbTest.before('dSiteDB Tests: setup vaults', async () => {
   // setup alice
-  const a = aliceVault = await DPackVault.create({
+  const a = aliceVault = await DWebVault.create({
     localPath: tempy.directory(),
     title: 'Alice Vault',
     author: {url: 'dweb://ffffffffffffffffffffffffffffffff'}
@@ -59,7 +59,7 @@ dSiteDbTest.before('dSiteDB Tests: setup vaults', async () => {
   await a.writeFile(`/broadcasts/bad.json`, JSON.stringify({this: 'is not included'}))
 
   // setup bob
-  const b = bobVault = await DPackVault.create({
+  const b = bobVault = await DWebVault.create({
     localPath: tempy.directory(),
     title: 'Bob Vault'
   })

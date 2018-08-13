@@ -1,6 +1,6 @@
 [![dWeb Core](https://raw.githubusercontent.com/DistributedWeb/dweb-design/master/repo-headers/dweb-repo-header.png)](https://dwebs.io)<br>
 
-# @dwcore/dsitedb
+# @dwebs/dsitedb
 
 ## Official Documentation
 
